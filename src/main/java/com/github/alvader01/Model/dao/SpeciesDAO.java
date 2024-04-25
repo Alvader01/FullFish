@@ -13,6 +13,11 @@ public class SpeciesDAO implements DAO<Species, Integer> {
     }
 
     @Override
+    public Species update(Species entity) {
+        return null;
+    }
+
+    @Override
     public Species delete(Species entity) throws SQLException {
         return null;
     }
