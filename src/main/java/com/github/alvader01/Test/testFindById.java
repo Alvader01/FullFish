@@ -8,13 +8,13 @@ public class testFindById {
     public static void main(String[] args) {
         UserDAO userDAO = new UserDAO();
 
-        User userFound = userDAO.findById("testUser");
+        User userFound = userDAO.findByUsername("testUser");
         System.out.println("User found: " + userFound);
 
-        User userNull = userDAO.findById(null);
+        User userNull = userDAO.findByUsername(null);
         System.out.println("User with null username: " + userNull);
 
-        User userEmpty = userDAO.findById("");
+        User userEmpty = userDAO.findByUsername("");
         System.out.println("User with empty username: " + userEmpty);
     }
     }

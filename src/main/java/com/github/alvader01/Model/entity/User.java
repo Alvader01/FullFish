@@ -28,6 +28,18 @@ public class User {
         fishTanks = null;
     }
 
+    public User(String username,  String password) {
+        this.username = username;
+        this.password = password;
+    }
+    public User(String username, String name,  String password, String email) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+    }
+
+
     public String getUsername() {
         return username;
     }
