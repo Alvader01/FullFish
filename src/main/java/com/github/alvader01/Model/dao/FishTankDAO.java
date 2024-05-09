@@ -8,19 +8,22 @@ import com.github.alvader01.Model.entity.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FishTankDAO implements DAO<FishTank, Integer> {
-    private final static String INSERT="INSERT INTO fishtank (id,name,capacity,lengthy,width,height) VALUES (?,?,?,?,?,?)";
-    private final static String UPDATE = "UPDATE fishtank SET name = ?, capacity = ?, lengthy = ?, width = ?, height = ? WHERE id = ?";    private final static String FINDALL="SELECT f.id, f.name, f.capacity, f.lengthy, f.width, f.height, FROM fishtank AS f";
-    private final static String FINDBYUSERNAME="SELECT f.id, f.name, f.capacity, f.lengthy, f.width, f.height FROM fishtank AS f WHERE f.id = ?";
-    private final static String DELETE="DELETE FROM fishtank WHERE id = ?";
+    private final static String INSERT="INSERT INTO Fishtank (name, capacity, lengthy, width, height, user_username) VALUES (?, ?, ?, ?, ?, ?);";
+    private final static String UPDATE = "UPDATE Fishtank SET name = ?, capacity = ?, lengthy = ?, width = ?, height = ? WHERE id = ?";
+    private final static String FINDALL = "SELECT f.id, f.name, f.capacity, f.lengthy, f.width, f.height FROM Fishtank AS f";
+    private final static String FINDBYID = "SELECT f.id, f.name, f.capacity, f.lengthy, f.width, f.height FROM Fishtank AS f WHERE f.id = ?";
+    private final static String DELETE = "DELETE FROM Fishtank WHERE id = ?";
+    private final static String FINDBYUSER = "SELECT * FROM fish_tank WHERE username = ?";
 
 
-    @Override
-    public FishTank save(FishTank fishTank) {
+
+    public FishTank saveFishTank(FishTank fishTank, User currentUser) {
         FishTank result = new FishTank();
         FishTank f = findById(fishTank.getId());
         if (f == null) {
@@ -31,6 +34,7 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
                 ps.setFloat(4, fishTank.getLengthy());
                 ps.setFloat(5, fishTank.getWidth());
                 ps.setFloat(6, fishTank.getHeight());
+                ps.setString(7, currentUser.getUsername());
                 ps.executeUpdate();
 
                 if (fishTank.getSpeciess() != null) {
@@ -45,6 +49,11 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
         return result;
     }
 
+
+    @Override
+    public FishTank save(FishTank entity) {
+        return null;
+    }
 
     @Override
     public FishTank update(FishTank fishTank) {
@@ -84,22 +93,80 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
 
 
     @Override
-    public FishTank delete(FishTank entity) throws SQLException {
-        return null;
+    public FishTank delete(FishTank fishTank) throws SQLException {
+        if ( fishTank!= null) {
+            try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(DELETE)) {
+                ps.setInt(1, fishTank.getId());
+                ps.executeUpdate();
+            }
+
+        }
+        return fishTank;
     }
 
     @Override
-    public FishTank findById(Integer key) {
-        return null;
+    public FishTank findById(Integer id) {
+        FishTank result = null;
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYID)) {
+            ps.setString(1, id.toString());
+            ResultSet res = ps.executeQuery();
+
+            if (res.next()) {
+                result = new FishTank();
+                result.setId(res.getInt("id"));
+                result.setName(res.getString("name"));
+            }
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+
     }
+
 
     @Override
     public List<FishTank> findAll() {
-        return null;
+        List<FishTank> result = new ArrayList<>();
+
+        try(PreparedStatement pst = ConnectionMariaDB.getConnection().prepareStatement(FINDALL)) {
+
+            ResultSet res = pst.executeQuery();
+            while(res.next()){
+                FishTank f = new FishTank();
+                f.setId(res.getInt("id"));
+                f.setName(res.getString("name"));
+                result.add(f);
+            }
+            res.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
+
     public List<FishTank> findByUser(String username) {
-        return null;
+        List<FishTank> fishTanks = new ArrayList<>();
+
+        try (Connection connection = ConnectionMariaDB.getConnection();
+             PreparedStatement ps = connection.prepareStatement(FINDBYUSER)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                FishTank fishTank = new FishTank();
+                fishTank.setId(rs.getInt("id"));
+                fishTank.setName(rs.getString("name"));
+
+                fishTanks.add(fishTank);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar los tanques de peces del usuario", e);
+        }
+
+        return fishTanks;
     }
 
     @Override

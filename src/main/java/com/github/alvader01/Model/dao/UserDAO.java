@@ -13,7 +13,7 @@ public class UserDAO implements DAO<User, String> {
     private final static String INSERT="INSERT INTO user (username,name,password,email) VALUES (?,?,?,?)";
     private final static String UPDATE="UPDATE user SET name = ?, password = ?, email = ? WHERE username = ?";
     private final static String FINDALL="SELECT u.username, u.name, u.password, u.email FROM user AS u";
-    private final static String FINDBYUSERNAME="SELECT u.username, u.name, u.password, u.email FROM user AS u WHERE u.username = ?";
+    private final static String FINDBYUSERNAME="SELECT u.username, u.password FROM user AS u WHERE u.username = ?";
     private final static String DELETE="DELETE FROM user WHERE username = ?";
 
     @Override
@@ -99,7 +99,7 @@ public class UserDAO implements DAO<User, String> {
             if (res.next()) {
                 result = new User();
                 result.setUsername(res.getString("username"));
-                result.setName(res.getString("name"));
+                result.setPassword(res.getString("password"));
             }
             res.close();
         } catch (SQLException e) {
@@ -107,6 +107,8 @@ public class UserDAO implements DAO<User, String> {
         }
 
         return result;
+
+
     }
 
 
@@ -130,6 +132,19 @@ public class UserDAO implements DAO<User, String> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public boolean exists(String username) {
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYUSERNAME)) {
+            ps.setString(1, username);
+            ResultSet res = ps.executeQuery();
+
+            return res.next();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 
