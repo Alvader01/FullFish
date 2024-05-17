@@ -1,6 +1,5 @@
 package com.github.alvader01.Model.dao;
 
-import com.github.alvader01.Model.Enum.SubGroup;
 import com.github.alvader01.Model.connection.ConnectionMariaDB;
 import com.github.alvader01.Model.entity.FishTank;
 import com.github.alvader01.Model.entity.Species;
@@ -14,18 +13,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SpeciesDAO implements DAO<Species, Integer> {
-    private final static String INSERT="INSERT INTO species (id,name,dimension,longevity,subGroup) VALUES (?,?,?,?,?)";
-    private final static String UPDATE="UPDATE species SET name = ?, dimension = ?, longevity = ?, subGroup = ? WHERE id = ?";
-    private final static String FINDALL="SELECT s.id, s.name, s.dimension, s.longevity, s.subGroup FROM species AS s";
-    private final static String FINDBYID="SELECT s.id, s.name, s.dimension, s.longevity, s.subGroup FROM species AS s WHERE s.id = ?";
+    private final static String INSERT="INSERT INTO species (id,name,dimension,longevity) VALUES (?,?,?,?)";
+    private final static String UPDATE="UPDATE species SET name = ?, dimension = ?, longevity = ? WHERE id = ?";
+    private final static String FINDALL="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s";
+    private final static String FINDBYID="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s WHERE s.id = ?";
     private final static String DELETE="DELETE FROM species WHERE id = ?";
     private final static String ADDSPECIESINTANK = "INSERT INTO Holds (fishtankId, speciesId) VALUES (?, ?)";
     private final static String DELETESPECIESFROMTANK = "DELETE FROM Holds WHERE fishtankId = ? AND speciesId = ?";
     private final static String UPDATESPECIESINTANK = "UPDATE Holds SET speciesId = ? WHERE fishtankId = ?";
-    private final static String FINDALLSPECIESINTANK = "SELECT s.id, s.name, s.dimension, s.longevity, s.subGroup FROM Species AS s JOIN Holds AS h ON s.id = h.speciesId WHERE h.fishtankId = ?";
-    private final static String FINDINFISHTANK="SELECT s.id, s.name, s.dimension, s.longevity, s.subGroup FROM species AS s WHERE s.id = ?";
+    private final static String FINDALLSPECIESINTANK = "SELECT s.id, s.name, s.dimension, s.longevity FROM Species AS s JOIN Holds AS h ON s.id = h.speciesId WHERE h.fishtankId = ?";
+    private final static String FINDINFISHTANK="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s WHERE s.id = ?";
+
     @Override
     public Species save(Species species) {
+        return null;
+    }
+
+    public Species saveSpecies(Species species, User currentUser) {
         Species result = new Species();
         Species s = findById(species.getId());
         if (s == null) {
@@ -34,15 +38,18 @@ public class SpeciesDAO implements DAO<Species, Integer> {
                 ps.setString(2, species.getName());
                 ps.setInt(3, species.getDimension());
                 ps.setInt(4, species.getLongevity());
-                ps.setString(5, species.getSubGroup().toString());
+                ps.setString(5, currentUser.getUsername());
                 ps.executeUpdate();
-
             } catch (SQLException e) {
                 throw new RuntimeException("Error al guardar la especie", e);
             }
         }
         return result;
+
     }
+
+
+
 
         @Override
     public Species update(Species species) {
@@ -50,8 +57,7 @@ public class SpeciesDAO implements DAO<Species, Integer> {
                 ps.setString(1, species.getName());
                 ps.setInt(2, species.getDimension());
                 ps.setInt(3, species.getLongevity());
-                ps.setString(4, species.getSubGroup().toString());
-                ps.setInt(5, species.getId());
+                ps.setInt(4, species.getId());
 
                 ps.executeUpdate();
             } catch (SQLException e) {
@@ -89,7 +95,6 @@ public class SpeciesDAO implements DAO<Species, Integer> {
                     species.setName(rs.getString("name"));
                     species.setDimension(rs.getInt("dimension"));
                     species.setLongevity(rs.getInt("longevity"));
-                    species.setSubGroup(SubGroup.valueOf(rs.getString("sub_group")));
                 }
             }
         } catch (SQLException e) {
@@ -112,7 +117,6 @@ public class SpeciesDAO implements DAO<Species, Integer> {
                 species.setName(rs.getString("name"));
                 species.setDimension(rs.getInt("dimension"));
                 species.setLongevity(rs.getInt("longevity"));
-                species.setSubGroup(SubGroup.valueOf(rs.getString("sub_group")));
 
                 result.add(species);
             }
@@ -142,7 +146,6 @@ public class SpeciesDAO implements DAO<Species, Integer> {
                     species.setName(rs.getString("name"));
                     species.setDimension(rs.getInt("dimension"));
                     species.setLongevity(rs.getInt("longevity"));
-                    species.setSubGroup(SubGroup.valueOf(rs.getString("sub_group")));
 
                     speciesList.add(species);
                 }
@@ -203,7 +206,6 @@ public class SpeciesDAO implements DAO<Species, Integer> {
             ps.setString(1, species.getName());
             ps.setInt(2, species.getDimension());
             ps.setInt(3, species.getLongevity());
-            ps.setString(4, species.getSubGroup().toString());
             ps.setInt(5, fishTank.getId());
             ps.setInt(6, species.getId());
 
@@ -213,6 +215,16 @@ public class SpeciesDAO implements DAO<Species, Integer> {
         }
     }
 
+    public boolean exists(Integer id) {
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYID)) {
+            ps.setString(1, id.toString());
+            ResultSet res = ps.executeQuery();
+            return res.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static SpeciesDAO build(){
         return new SpeciesDAO();
     }

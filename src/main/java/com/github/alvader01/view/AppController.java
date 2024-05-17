@@ -26,6 +26,9 @@ public class AppController extends Controller implements Initializable {
     @FXML
     static Alert alert2= new Alert(Alert.AlertType.CONFIRMATION);
 
+    @FXML
+    static Alert alertInfoRegister= new Alert(Alert.AlertType.INFORMATION);
+
     @Override
     public void onOpen(Object input) throws IOException {
         //Al abrir este controlador que cargue main en el centro
@@ -86,6 +89,12 @@ public class AppController extends Controller implements Initializable {
         alert.setContentText("No se pudo registrar el usuario");
         alert.showAndWait();
     }
+    public static void ShowAlertsErrorLogin2(){
+        alert.setTitle("Error");
+        alert.setContentText("Necesitas introducir los campos de usuario y contraseña");
+        alert.showAndWait();
+
+    }
     public static void ShowAlertsSuccessfullyRegister(){
         alert2.setTitle("Exito");
         alert2.setContentText("Usuario registrado con exito");
@@ -97,6 +106,132 @@ public class AppController extends Controller implements Initializable {
         alert.setContentText("El usuario ya existe");
         alert.showAndWait();
     }
+    public static void  ShowInformation(){
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setContentText("No puedes crear usuarios con el mismo usuario");
+        alertInfoRegister.showAndWait();
+
+    }
+    public static void  ShowInformationUser(){
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para editar una acuario haz doble click en el campo que quieras editar");
+        alertInfoRegister.showAndWait();
+
+    }
+    public static void  ShowInformationFishTank(){
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para editar una acuario haz doble click en el campo que quieras editar");
+        alertInfoRegister.showAndWait();
+    }
+    public static void  ShowInformationSpecies(){
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para editar una especie haz doble click en el campo que quieras editar");
+        alertInfoRegister.showAndWait();
+    }
+
+    public static void ShowAlertsTankAlreadyExists(){
+        alert.setTitle("Error");
+        alert.setContentText("El acuario ya existe");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsSpeciesAlreadyExists(){
+        alert.setTitle("Error");
+        alert.setContentText("La especie ya existe");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsSuccessfullyCreateTank(){
+        alert2.setTitle("Exito");
+        alert2.setContentText("Acuario registrado con exito");
+        alert2.showAndWait();
+    }
+    public static void ShowAlertsSuccessfullyCreateSpecies(){
+        alert2.setTitle("Exito");
+        alert2.setContentText("Especie registrada con exito");
+        alert2.showAndWait();
+    }
+
+    public static void ShowAlertsErrorCreatingTank(){
+        alert.setTitle("Error");
+        alert.setContentText("No se pudo registrar el acuario");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsErrorCreatingSpecies(){
+        alert.setTitle("Error");
+        alert.setContentText("No se pudo registrar la especie");
+        alert.showAndWait();
+    }
+    public static void  ShowInformationDeleteUser(){
+        alertInfoRegister.getDialogPane().setPrefHeight(200);
+        alertInfoRegister.getDialogPane().setPrefWidth(300);
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para borrar el usuario que deaseas introduce su username." +
+                "Aqui no podras actualizar los datos de usuario");
+        alertInfoRegister.showAndWait();
+
+    }
+
+    public static void ShowAlertsSuccessfullyDeleteUser(){
+        alert2.setTitle("Exito");
+        alert2.setContentText("Usuario eliminado con exito");
+        alert2.showAndWait();
+    }
+    public static void ShowAlertsSuccessfullyDeleteFishTank(){
+        alert2.setTitle("Exito");
+        alert2.setContentText("Acuario eliminado con exito");
+        alert2.showAndWait();
+    }
+    public static void ShowAlertsSuccessfullyDeleteSpecies(){
+        alert2.setTitle("Exito");
+        alert2.setContentText("Especie eliminada con exito");
+        alert2.showAndWait();
+    }
+
+    public static void ShowAlertsErrorDeleteUser(){
+        alert.setTitle("Error");
+        alert.setContentText("No se pudo eliminar el usuario");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsErrorDeleteFishTank(){
+        alert.setTitle("Error");
+        alert.setContentText("No se pudo eliminar el acuario");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsErrorDeleteSpecies(){
+        alert.setTitle("Error");
+        alert.setContentText("No se pudo eliminar la especie");
+        alert.showAndWait();
+    }
+
+    public static void  ShowInformationDeleteFishTank(){
+        alertInfoRegister.getDialogPane().setPrefHeight(200);
+        alertInfoRegister.getDialogPane().setPrefWidth(300);
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para borrar el acuario que deaseas introduce su id." +
+                "Aqui no podras actualizar los datos de acuario");
+        alertInfoRegister.showAndWait();
+
+    }
+    public static void  ShowInformationDeleteSpecies(){
+        alertInfoRegister.getDialogPane().setPrefHeight(200);
+        alertInfoRegister.getDialogPane().setPrefWidth(300);
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para borrar la especie que deaseas introduce su id." +
+                "Aqui no podras actualizar los datos de la especie");
+        alertInfoRegister.showAndWait();
+
+    }
+
+
+
+
+
 
 
     @FXML

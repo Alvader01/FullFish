@@ -25,6 +25,14 @@ public class FishTank {
         this.speciess = speciess;
 
     }
+    public FishTank( String name, int capacity, float lengthy, float width, float height) {
+        this.name = name;
+        this.capacity = capacity;
+        this.lengthy = lengthy;
+        this.width = width;
+        this.height = height;
+
+    }
 
     public FishTank() {
     }

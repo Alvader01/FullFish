@@ -28,6 +28,9 @@ public class MainPageController extends Controller implements Initializable {
     @FXML
     ImageView boton;
 
+    @FXML
+    ImageView info;
+
 
 
     @Override
@@ -60,9 +63,6 @@ public class MainPageController extends Controller implements Initializable {
         App.currentController.changeScene(Scenes.SPECIESCONFIG,null);
     }
 
-    public void changeSceneToLogin() throws IOException{
-        App.currentController.changeScene(Scenes.LOGIN,null);
-    }
 
 
 

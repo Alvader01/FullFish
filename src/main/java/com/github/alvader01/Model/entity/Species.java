@@ -1,7 +1,5 @@
 package com.github.alvader01.Model.entity;
 
-import com.github.alvader01.Model.Enum.SubGroup;
-
 import java.util.Objects;
 
 public class Species {
@@ -9,23 +7,24 @@ public class Species {
     private String name;
     private int dimension;
     private int longevity;
-    private SubGroup subGroup;
 
-    public Species(int id, String name, int dimension, int longevity, SubGroup subGroup) {
+    public Species(int id, String name, int dimension, int longevity) {
         this.id = id;
         this.name = name;
         this.dimension = dimension;
         this.longevity = longevity;
-        this.subGroup = subGroup;
+    }
+
+    public Species(String name, int dimension, int longevity) {
+        this.name = name;
+        this.dimension = dimension;
+        this.longevity = longevity;
     }
 
     public Species() {
-        id = 0;
-        name = "";
-        dimension = 0;
-        longevity = 0;
-        subGroup = null;
+
     }
+
 
     public int getId() {
         return id;
@@ -59,14 +58,6 @@ public class Species {
         this.longevity = longevity;
     }
 
-    public SubGroup getSubGroup() {
-        return subGroup;
-    }
-
-    public void setSubGroup(SubGroup subGroup) {
-        this.subGroup = subGroup;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,7 +78,6 @@ public class Species {
                 ", name='" + name + '\'' +
                 ", dimension=" + dimension +
                 ", longevity=" + longevity +
-                ", subGroup=" + subGroup +
                 '}';
     }
 }

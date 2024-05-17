@@ -13,7 +13,7 @@ public class UserDAO implements DAO<User, String> {
     private final static String INSERT="INSERT INTO user (username,name,password,email) VALUES (?,?,?,?)";
     private final static String UPDATE="UPDATE user SET name = ?, password = ?, email = ? WHERE username = ?";
     private final static String FINDALL="SELECT u.username, u.name, u.password, u.email FROM user AS u";
-    private final static String FINDBYUSERNAME="SELECT u.username, u.password FROM user AS u WHERE u.username = ?";
+    private final static String FINDBYUSERNAME="SELECT u.username,u.name, u.password,u.email FROM user AS u WHERE u.username = ?";
     private final static String DELETE="DELETE FROM user WHERE username = ?";
 
     @Override
@@ -43,10 +43,34 @@ public class UserDAO implements DAO<User, String> {
     @Override
     public User update(User user) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(UPDATE)) {
-            ps.setString(1, user.getName());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getEmail());
+            User lastUser = findByUsername(user.getUsername());
+
+            String nameToUpdate;
+            if (user.getName() == null || user.getName().isEmpty()) {
+                nameToUpdate = lastUser.getName();
+            } else {
+                nameToUpdate = user.getName();
+            }
+            ps.setString(1, nameToUpdate);
+
+            String passwordToUpdate;
+            if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                passwordToUpdate = lastUser.getPassword();
+            } else {
+                passwordToUpdate = user.getPassword();
+            }
+            ps.setString(2, passwordToUpdate);
+
+            String emailToUpdate;
+            if (user.getEmail() == null || user.getEmail().isEmpty()) {
+                emailToUpdate = lastUser.getEmail();
+            } else {
+                emailToUpdate = user.getEmail();
+            }
+            ps.setString(3, emailToUpdate);
+
             ps.setString(4, user.getUsername());
+
             ps.executeUpdate();
 
             if (user.getFishTanks() != null) {
@@ -90,26 +114,29 @@ public class UserDAO implements DAO<User, String> {
         return null;
     }
 
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
         User result = null;
-        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYUSERNAME)) {
-            ps.setString(1, username);
-            ResultSet res = ps.executeQuery();
 
-            if (res.next()) {
-                result = new User();
-                result.setUsername(res.getString("username"));
-                result.setPassword(res.getString("password"));
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYUSERNAME)) {
+                ps.setString(1, username);
+                ResultSet res = ps.executeQuery();
+
+                if (res.next()) {
+                    result = new User();
+                    result.setUsername(res.getString("username"));
+                    result.setName(res.getString("name"));
+                    result.setPassword(res.getString("password"));
+                    result.setEmail(res.getString("email"));
+
+                }
+                res.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            res.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return result;
         }
 
-        return result;
 
-
-    }
 
 
 
@@ -125,6 +152,7 @@ public class UserDAO implements DAO<User, String> {
                 User u = new User();
                 u.setUsername(res.getString("username"));
                 u.setName(res.getString("name"));
+                u.setEmail(res.getString("email"));
                 result.add(u);
             }
             res.close();

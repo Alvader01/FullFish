@@ -28,13 +28,12 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
         FishTank f = findById(fishTank.getId());
         if (f == null) {
             try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(INSERT)) {
-                ps.setInt(1, fishTank.getId());
-                ps.setString(2, fishTank.getName());
-                ps.setInt(3, fishTank.getCapacity());
-                ps.setFloat(4, fishTank.getLengthy());
-                ps.setFloat(5, fishTank.getWidth());
-                ps.setFloat(6, fishTank.getHeight());
-                ps.setString(7, currentUser.getUsername());
+                ps.setString(1, fishTank.getName());
+                ps.setInt(2, fishTank.getCapacity());
+                ps.setFloat(3, fishTank.getLengthy());
+                ps.setFloat(4, fishTank.getWidth());
+                ps.setFloat(5, fishTank.getHeight());
+                ps.setString(6, currentUser.getUsername());
                 ps.executeUpdate();
 
                 if (fishTank.getSpeciess() != null) {
@@ -137,6 +136,10 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
                 FishTank f = new FishTank();
                 f.setId(res.getInt("id"));
                 f.setName(res.getString("name"));
+                f.setCapacity(res.getInt("capacity"));
+                f.setLengthy(res.getFloat("lengthy"));
+                f.setWidth(res.getFloat("width"));
+                f.setHeight(res.getFloat("height"));
                 result.add(f);
             }
             res.close();
@@ -177,6 +180,18 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
     public static FishTankDAO build(){
         return new FishTankDAO();
     }
+
+    public boolean exists(Integer id) {
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYID)) {
+            ps.setString(1, id.toString());
+            ResultSet res = ps.executeQuery();
+            return res.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 
     public class FishTankEager extends FishTank {

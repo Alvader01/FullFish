@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,17 +48,25 @@ public class LoginController extends Controller implements Initializable {
     }
 
     public User getValues(){
+        User user = new User();
         String usernames = username.getText();
         String passwords = password.getText();
-        User user = new User(usernames,passwords);
-
-        return user;
+        if (!usernames.isEmpty() && !passwords.isEmpty()) {
+            user.setUsername(usernames);
+            user.setPassword(passwords);
+            return user;
+        } else {
+            return null;
+        }
     }
 
     public void Login() throws IOException{
         User user = getValues();
         UserDAO uDAO = new UserDAO();
-        if (uDAO.findByUsername(user.getUsername()) != null) {
+        if (user==null) {
+            AppController.ShowAlertsErrorLogin2();
+        }
+        else if (uDAO.findByUsername(user.getUsername()) != null) {
             UserSession.login(user);
             changeSceneToMainPage();
         }else{
@@ -72,4 +81,6 @@ public class LoginController extends Controller implements Initializable {
     public void changeSceneToRegister() throws IOException{
         App.currentController.changeScene(Scenes.REGISTER,null);
     }
+
+
 }
