@@ -7,6 +7,11 @@ public enum Scenes {
     SPECIESCONFIG("view/SpeciesConfig.fxml"),
     FISHTANKCONFIG("view/FishTankConfig.fxml"),
     USERCONFIG("view/UserConfig.fxml"),
+    CREATEFISHTANK("view/CreateFishTank.fxml"),
+    DELETEFISHTANK("view/DeleteFishTank.fxml"),
+    DELETEUSER("view/DeleteUser.fxml"),
+    CREATESPECIES("view/CreateSpecies.fxml"),
+    DELETESPECIES("view/DeleteSpecies.fxml"),
     LOGIN("view/Login.fxml");
 
 

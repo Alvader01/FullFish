@@ -6,9 +6,11 @@ import com.github.alvader01.Model.dao.UserDAO;
 import com.github.alvader01.Model.entity.User;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +28,9 @@ public class RegisterController extends Controller implements Initializable {
     TextField email;
     @FXML
     Button registrarse;
+    @FXML
+    ImageView info;
+
 
 
     @Override
@@ -54,7 +59,7 @@ public class RegisterController extends Controller implements Initializable {
 
     public void Register() throws IOException{
         User user = getValues();
-        if (user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty()) {
+        if (user.getUsername().isEmpty() || user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty()) {
             AppController.ShowAlertsErrorRegister();
         } else {
             UserDAO uDAO = new UserDAO();
@@ -74,6 +79,10 @@ public class RegisterController extends Controller implements Initializable {
 
     public void changeSceneToLoginPage() throws IOException{
         App.currentController.changeScene(Scenes.LOGIN,null);
+    }
+
+    public void ShowInfo(){
+        AppController.ShowInformation();
     }
 
 

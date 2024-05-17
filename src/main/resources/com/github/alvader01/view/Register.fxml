@@ -40,5 +40,10 @@
             <Image fx:id="boton" url="@MaterialSymbolsArrowCircleLeftOutlineRounded.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="info" fitHeight="36.0" fitWidth="43.0" layoutX="247.0" layoutY="11.0" onMouseClicked="#ShowInfo" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@MdiInformationVariantCircle.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
