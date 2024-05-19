@@ -5,7 +5,6 @@ import com.github.alvader01.Model.Singleton.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;

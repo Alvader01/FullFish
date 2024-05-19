@@ -1,9 +1,7 @@
 package com.github.alvader01.view;
 
 import com.github.alvader01.App;
-import com.github.alvader01.Model.dao.FishTankDAO;
 import com.github.alvader01.Model.dao.SpeciesDAO;
-import com.github.alvader01.Model.entity.FishTank;
 import com.github.alvader01.Model.entity.Species;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,9 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.net.URL;

@@ -4,9 +4,9 @@ import com.github.alvader01.App;
 import com.github.alvader01.Model.Singleton.UserSession;
 import com.github.alvader01.Model.dao.UserDAO;
 import com.github.alvader01.Model.entity.User;
+import com.github.alvader01.utils.PasswordHasher;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -57,15 +57,23 @@ public class RegisterController extends Controller implements Initializable {
         return user;
     }
 
-    public void Register() throws IOException{
+    public void Register() throws IOException {
         User user = getValues();
         if (user.getUsername().isEmpty() || user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty()) {
             AppController.ShowAlertsErrorRegister();
         } else {
+            if (!isValidEmail(user.getEmail())) {
+                AppController.ShowAlertsInvalidEmail();
+                return;
+            }
+
             UserDAO uDAO = new UserDAO();
             if (uDAO.exists(user.getUsername())) {
                 AppController.ShowAlertsUserAlreadyExists();
             } else {
+                String hashedPassword = PasswordHasher.hashPassword(user.getPassword());
+                user.setPassword(hashedPassword);
+
                 if (uDAO.save(user) != null) {
                     UserSession.login(user);
                     changeSceneToLoginPage();
@@ -75,6 +83,11 @@ public class RegisterController extends Controller implements Initializable {
                 }
             }
         }
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
     }
 
     public void changeSceneToLoginPage() throws IOException{

@@ -12,6 +12,7 @@ public enum Scenes {
     DELETEUSER("view/DeleteUser.fxml"),
     CREATESPECIES("view/CreateSpecies.fxml"),
     DELETESPECIES("view/DeleteSpecies.fxml"),
+    ADDSPECIESTOTANK("view/AddSpeciesToTank.fxml"),
     LOGIN("view/Login.fxml");
 
 

@@ -2,9 +2,7 @@ package com.github.alvader01.view;
 
 import com.github.alvader01.App;
 import com.github.alvader01.Model.dao.FishTankDAO;
-import com.github.alvader01.Model.dao.UserDAO;
 import com.github.alvader01.Model.entity.FishTank;
-import com.github.alvader01.Model.entity.User;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;

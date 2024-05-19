@@ -17,11 +17,8 @@ public class SpeciesDAO implements DAO<Species, Integer> {
     private final static String UPDATE="UPDATE species SET name = ?, dimension = ?, longevity = ? WHERE id = ?";
     private final static String FINDALL="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s";
     private final static String FINDBYID="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s WHERE s.id = ?";
+    private final static String FINDBYNAME="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s WHERE s.name = ?";
     private final static String DELETE="DELETE FROM species WHERE id = ?";
-    private final static String ADDSPECIESINTANK = "INSERT INTO Holds (fishtankId, speciesId) VALUES (?, ?)";
-    private final static String DELETESPECIESFROMTANK = "DELETE FROM Holds WHERE fishtankId = ? AND speciesId = ?";
-    private final static String UPDATESPECIESINTANK = "UPDATE Holds SET speciesId = ? WHERE fishtankId = ?";
-    private final static String FINDALLSPECIESINTANK = "SELECT s.id, s.name, s.dimension, s.longevity FROM Species AS s JOIN Holds AS h ON s.id = h.speciesId WHERE h.fishtankId = ?";
     private final static String FINDINFISHTANK="SELECT s.id, s.name, s.dimension, s.longevity FROM species AS s WHERE s.id = ?";
 
     @Override
@@ -133,29 +130,7 @@ public class SpeciesDAO implements DAO<Species, Integer> {
 
     }
 
-    public List<Species> findAllSpeciesInTank(FishTank fishTank) {
-        List<Species> speciesList = new ArrayList<>();
 
-        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDALLSPECIESINTANK)) {
-            ps.setInt(1, fishTank.getId());
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    Species species = new Species();
-                    species.setId(rs.getInt("id"));
-                    species.setName(rs.getString("name"));
-                    species.setDimension(rs.getInt("dimension"));
-                    species.setLongevity(rs.getInt("longevity"));
-
-                    speciesList.add(species);
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al encontrar todas las especies en el acuario", e);
-        }
-
-        return speciesList;
-    }
 
 
     public List<Species> findInFishTank(FishTank fishTank) {
@@ -177,43 +152,26 @@ public class SpeciesDAO implements DAO<Species, Integer> {
 
         return speciesInTank;
     }
-
-    public void addSpeciesToTank(Species species, FishTank fishTank) {
-        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(ADDSPECIESINTANK)) {
-            ps.setInt(1, species.getId());
-            ps.setInt(2, fishTank.getId());
-
-            ps.executeUpdate();
+    public Species findSpeciesByName(String name) {
+        Species result = null;
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYNAME)) {
+            ps.setString(1, name);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Species s = new Species();
+                    s.setId(rs.getInt("id"));
+                    s.setName(rs.getString("name"));
+                    s.setDimension(rs.getInt("dimension"));
+                    s.setLongevity(rs.getInt("longevity"));
+                    result = s;
+                }
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al añadir la especie al acuario", e);
+            e.printStackTrace();
         }
+        return result;
     }
 
-    public void removeSpeciesFromTank(Species species, FishTank fishTank) {
-        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(DELETESPECIESFROMTANK)) {
-            ps.setInt(1, species.getId());
-            ps.setInt(2, fishTank.getId());
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar la especie del acuario", e);
-        }
-
-    }
-
-    public void updateSpeciesInTank(Species species, FishTank fishTank) {
-        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(UPDATESPECIESINTANK)) {
-            ps.setString(1, species.getName());
-            ps.setInt(2, species.getDimension());
-            ps.setInt(3, species.getLongevity());
-            ps.setInt(5, fishTank.getId());
-            ps.setInt(6, species.getId());
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar la especie en el acuario", e);
-        }
-    }
 
     public boolean exists(Integer id) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYID)) {

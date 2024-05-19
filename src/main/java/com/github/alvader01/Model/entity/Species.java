@@ -21,6 +21,7 @@ public class Species {
         this.longevity = longevity;
     }
 
+
     public Species() {
 
     }

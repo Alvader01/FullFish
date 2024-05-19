@@ -2,9 +2,7 @@ package com.github.alvader01.view;
 
 import com.github.alvader01.App;
 import com.github.alvader01.Model.Singleton.UserSession;
-import com.github.alvader01.Model.dao.FishTankDAO;
 import com.github.alvader01.Model.dao.SpeciesDAO;
-import com.github.alvader01.Model.entity.FishTank;
 import com.github.alvader01.Model.entity.Species;
 import com.github.alvader01.Model.entity.User;
 import javafx.fxml.FXML;
@@ -41,9 +39,6 @@ public class CreateSpeciesController extends Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    }
-    public void setCurrentUser(User user) {
-        UserSession.login(user);
     }
 
     public Species getSpeciesValues() {

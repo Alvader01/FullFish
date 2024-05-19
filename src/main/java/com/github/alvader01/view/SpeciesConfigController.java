@@ -1,13 +1,8 @@
 package com.github.alvader01.view;
 
 import com.github.alvader01.App;
-import com.github.alvader01.Model.dao.FishTankDAO;
 import com.github.alvader01.Model.dao.SpeciesDAO;
-import com.github.alvader01.Model.dao.UserDAO;
-import com.github.alvader01.Model.entity.FishTank;
 import com.github.alvader01.Model.entity.Species;
-import com.github.alvader01.Model.entity.User;
-import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -43,6 +38,8 @@ public class SpeciesConfigController extends Controller implements Initializable
     TableColumn<Species, Integer> longevity;
     @FXML
     Button eliminar;
+    @FXML
+    Button anadir;
     @FXML
     ImageView info;
 
@@ -111,4 +108,8 @@ public class SpeciesConfigController extends Controller implements Initializable
     public void changeSceneToDeleteSpecies() throws IOException{
         App.currentController.changeScene(Scenes.DELETESPECIES,null);
     }
+    public void changeSceneToAddSpeciesFishTank() throws IOException{
+        App.currentController.changeScene(Scenes.ADDSPECIESTOTANK,null);
+    }
+
 }

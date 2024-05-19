@@ -16,7 +16,7 @@
             <Font name="Cambria Math" size="24.0" />
          </font>
       </Text>
-      <Button fx:id="crear" layoutX="149.0" layoutY="363.0" mnemonicParsing="false" onAction="#changeSceneToCreateSpecies" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Crear Especie">
+      <Button fx:id="crear" layoutX="77.0" layoutY="363.0" mnemonicParsing="false" onAction="#changeSceneToCreateSpecies" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Crear Especie">
          <font>
             <Font name="Cambria Math" size="16.0" />
          </font>
@@ -44,7 +44,12 @@
             <Font name="Cambria Math" size="24.0" />
          </font>
       </Text>
-      <Button fx:id="eliminar" layoutX="472.0" layoutY="363.0" mnemonicParsing="false" onAction="#changeSceneToDeleteSpecies" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Borrar Especie">
+      <Button fx:id="eliminar" layoutX="570.0" layoutY="363.0" mnemonicParsing="false" onAction="#changeSceneToDeleteSpecies" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Borrar Especie">
+         <font>
+            <Font name="Cambria Math" size="16.0" />
+         </font>
+      </Button>
+      <Button fx:id="anadir" layoutX="311.0" layoutY="363.0" mnemonicParsing="false" onAction="#changeSceneToAddSpeciesFishTank" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Añadir a Acuario">
          <font>
             <Font name="Cambria Math" size="16.0" />
          </font>
