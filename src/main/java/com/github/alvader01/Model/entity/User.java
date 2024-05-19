@@ -80,29 +80,6 @@ public class User {
         this.fishTanks = fishTanks;
     }
 
-    public void addFishTank(FishTank fishtank){
-        if(fishTanks ==null){
-            fishTanks = new ArrayList<>();
-        }
-        if(!fishTanks.contains(fishtank)){
-            fishTanks.add(fishtank);
-        }
-    }
-    public void removeFishTank(FishTank fishtank){
-        if(fishTanks !=null){
-            fishTanks.remove(fishtank);
-        }
-    }
-
-    public FishTank getFishTank(FishTank fishtank){
-        FishTank result=null;
-        if(fishTanks !=null){
-            int i= fishTanks.indexOf(fishtank);
-            result = fishTanks.get(i);
-        }
-        return result;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

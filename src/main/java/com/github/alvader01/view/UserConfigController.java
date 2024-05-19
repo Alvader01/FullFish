@@ -32,8 +32,6 @@ public class UserConfigController extends Controller implements Initializable {
     @FXML
     TableColumn<User, String> email;
     @FXML
-    Button delete;
-    @FXML
     ImageView info;
 
     private ObservableList<User> users;

@@ -192,29 +192,6 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
         }
     }
 
-
-
-    public class FishTankEager extends FishTank {
-        private User user;
-        private UserDAO userDAO;
-        public FishTankEager(UserDAO userDAO) {
-            this.userDAO = userDAO;
-        }
-        public void loadFishTanksForUser(String username) {
-            User user = userDAO.findByUsername(username);
-            if (user != null) {
-                List<FishTank> fishTanks = user.getFishTanks();
-                for (FishTank fishTank : fishTanks) {
-                    List<Species> speciesInTank = fishTank.getSpeciess();
-                    fishTank.setSpeciess(speciesInTank);
-                }
-                user.setFishTanks(fishTanks);
-                this.user = user;
-            } else {
-                System.out.println("Usuario no encontrado");
-            }
-        }
-    }
 }
 
 

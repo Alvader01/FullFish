@@ -45,9 +45,7 @@ public class CreateFishTankController extends Controller implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
-    public void setCurrentUser(User user) {
-        UserSession.login(user);
-    }
+
 
     public FishTank getFishTankValues() {
         User currentUser = UserSession.getCurrentUser();

@@ -52,7 +52,6 @@ public class AppController extends Controller implements Initializable {
         stage.setScene(_scene);
         view.controller.onOpen(parent);
         stage.showAndWait();
-        //podríamos leer que ha devuelto...
 
     }
 
@@ -69,7 +68,6 @@ public class AppController extends Controller implements Initializable {
 
     public static View loadFXML(Scenes scenes) throws IOException {
         String url = scenes.getURL();
-        System.out.println(url);
         FXMLLoader loader = new FXMLLoader(App.class.getResource(url));
         Parent p = loader.load();
         Controller c = loader.getController();
@@ -82,6 +80,16 @@ public class AppController extends Controller implements Initializable {
     public static void ShowAlertsErrorLogin(){
         alert.setTitle("Error");
         alert.setContentText("Usuario o contraseña incorrectos");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsErrorLoginPassword(){
+        alert.setTitle("Error");
+        alert.setContentText("La contraseña es incorrecta");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsInvalidEmail(){
+        alert.setTitle("Error");
+        alert.setContentText("El email tiene que ser valido, por ejemplo: 1rT8j@example.com");
         alert.showAndWait();
     }
     public static void ShowAlertsErrorRegister(){
@@ -101,6 +109,7 @@ public class AppController extends Controller implements Initializable {
         alert2.showAndWait();
     }
 
+
     public static void ShowAlertsUserAlreadyExists(){
         alert.setTitle("Error");
         alert.setContentText("El usuario ya existe");
@@ -113,6 +122,7 @@ public class AppController extends Controller implements Initializable {
         alertInfoRegister.showAndWait();
 
     }
+
     public static void  ShowInformationUser(){
         alertInfoRegister.setHeaderText(null);
         alertInfoRegister.setTitle("Informacion");
@@ -124,6 +134,15 @@ public class AppController extends Controller implements Initializable {
         alertInfoRegister.setHeaderText(null);
         alertInfoRegister.setTitle("Informacion");
         alertInfoRegister.setContentText("Para editar una acuario haz doble click en el campo que quieras editar");
+        alertInfoRegister.showAndWait();
+    }
+    public static void  ShowInformationAddSpecies(){
+        alertInfoRegister.getDialogPane().setPrefHeight(200);
+        alertInfoRegister.getDialogPane().setPrefWidth(300);
+        alertInfoRegister.setHeaderText(null);
+        alertInfoRegister.setTitle("Informacion");
+        alertInfoRegister.setContentText("Para añadir una especie a un acuario selecciona que especie deseas añadir" +
+                "y a que acuario deseas añadirla. Para eliminarla lo mismo pero pulsando el boton eliminar");
         alertInfoRegister.showAndWait();
     }
     public static void  ShowInformationSpecies(){
@@ -159,6 +178,8 @@ public class AppController extends Controller implements Initializable {
         alert.setContentText("No se pudo registrar el acuario");
         alert.showAndWait();
     }
+
+
     public static void ShowAlertsErrorCreatingSpecies(){
         alert.setTitle("Error");
         alert.setContentText("No se pudo registrar la especie");
@@ -227,12 +248,6 @@ public class AppController extends Controller implements Initializable {
         alertInfoRegister.showAndWait();
 
     }
-
-
-
-
-
-
 
     @FXML
     private void closeApp(){

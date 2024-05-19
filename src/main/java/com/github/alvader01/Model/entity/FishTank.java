@@ -94,32 +94,6 @@ public class FishTank {
     }
 
 
-
-    public void addSpecies(Species species){
-        if(speciess==null){
-            speciess = new ArrayList<>();
-        }
-        if(!speciess.contains(species)){
-            speciess.add(species);
-        }
-    }
-    public void removeSpecies(Species species){
-        if(speciess!=null){
-            speciess.remove(species);
-        }
-    }
-
-    public Species getSpecies(Species species){
-        Species result=null;
-        if(speciess!=null){
-            int i=speciess.indexOf(species);
-            result = speciess.get(i);
-        }
-        return result;
-    }
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

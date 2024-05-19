@@ -1,7 +1,6 @@
 package com.github.alvader01.view;
 
 import com.github.alvader01.App;
-import com.github.alvader01.Model.Singleton.UserSession;
 import com.github.alvader01.Model.dao.FishTankDAO;
 import com.github.alvader01.Model.entity.FishTank;
 import javafx.beans.property.SimpleFloatProperty;
@@ -13,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
@@ -45,6 +45,9 @@ public class FishTankConfigController extends Controller implements Initializabl
     Button eliminar;
     @FXML
     ImageView info;
+    @FXML
+    Button anadir;
+
 
     private ObservableList<FishTank> fishTanks;
 
@@ -65,6 +68,22 @@ public class FishTankConfigController extends Controller implements Initializabl
     public void initialize(URL url, ResourceBundle resourceBundle) {
         FishTankDAO fDAO = new FishTankDAO();
         table.setEditable(true);
+        table.setRowFactory(tv -> {
+            TableRow<FishTank> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                FishTank fishtank = table.getSelectionModel().getSelectedItem();
+                if (event.getClickCount() == 3 && ! row.isEmpty() && fishtank != null ) {
+                    FishTank fishTank = row.getItem();
+                    try {
+                        App.currentController.changeScene(Scenes.ADDSPECIESTOTANK,fishTank.getId());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+
+            });
+            return row ;
+        });
         Id.setCellValueFactory(fishTank -> new SimpleIntegerProperty(fishTank.getValue().getId()).asObject());
         name.setCellValueFactory(fishTank -> new SimpleStringProperty(fishTank.getValue().getName()));
         capacity.setCellValueFactory(fishTank -> new SimpleIntegerProperty(fishTank.getValue().getCapacity()).asString());
@@ -127,6 +146,9 @@ public class FishTankConfigController extends Controller implements Initializabl
     }
     public void changeSceneToCreateFishTank() throws IOException{
         App.currentController.changeScene(Scenes.CREATEFISHTANK,null);
+    }
+    public void changeSceneToAddSpeciesFishTank() throws IOException{
+        App.currentController.changeScene(Scenes.ADDSPECIESTOTANK,null);
     }
     public void changeSceneToDeleteFishTank() throws IOException{
         App.currentController.changeScene(Scenes.DELETEFISHTANK,null);

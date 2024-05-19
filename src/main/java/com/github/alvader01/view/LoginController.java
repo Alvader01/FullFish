@@ -2,22 +2,18 @@ package com.github.alvader01.view;
 
 import com.github.alvader01.App;
 import com.github.alvader01.Model.Singleton.UserSession;
-import com.github.alvader01.Model.dao.FishTankDAO;
 import com.github.alvader01.Model.dao.UserDAO;
 import com.github.alvader01.Model.entity.User;
+import com.github.alvader01.utils.PasswordHasher;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import static com.github.alvader01.view.AppController.alert;
 
 public class LoginController extends Controller implements Initializable {
     @FXML
@@ -60,17 +56,27 @@ public class LoginController extends Controller implements Initializable {
         }
     }
 
-    public void Login() throws IOException{
+    public void Login() throws IOException {
         User user = getValues();
         UserDAO uDAO = new UserDAO();
-        if (user==null) {
+
+        if (user == null) {
             AppController.ShowAlertsErrorLogin2();
-        }
-        else if (uDAO.findByUsername(user.getUsername()) != null) {
-            UserSession.login(user);
-            changeSceneToMainPage();
-        }else{
-            AppController.ShowAlertsErrorLogin();
+        } else {
+            User userFromDB = uDAO.findByUsername(user.getUsername());
+
+            if (userFromDB != null) {
+                String hashedInputPassword = PasswordHasher.hashPassword(user.getPassword());
+
+                if (hashedInputPassword != null && hashedInputPassword.equals(userFromDB.getPassword())) {
+                    UserSession.login(userFromDB);
+                    changeSceneToMainPage();
+                } else {
+                    AppController.ShowAlertsErrorLoginPassword();
+                }
+            } else {
+                AppController.ShowAlertsErrorLogin();
+            }
         }
     }
 
