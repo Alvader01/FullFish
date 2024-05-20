@@ -56,7 +56,13 @@ public class CreateSpeciesController extends Controller implements Initializable
         return species;
     }
 
-    public void createSpecies() throws IOException {
+
+    /**
+     * Creates a new species with the provided values.
+     * Displays error alerts if the provided values are invalid or if a species with the same ID already exists.
+     *
+     * @throws IOException If an I/O exception occurs while creating the species.
+     */public void createSpecies() throws IOException {
         Species species = getSpeciesValues();
 
         if (species == null || species.getName().isEmpty() || species.getDimension() == 0 || species.getLongevity() == 0) {

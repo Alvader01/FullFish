@@ -57,6 +57,12 @@ public class RegisterController extends Controller implements Initializable {
         return user;
     }
 
+    /**
+     * Registers a new user with the provided credentials.
+     * Displays error alerts if the registration attempt fails due to invalid input or other issues.
+     *
+     * @throws IOException If an I/O exception occurs while registering the user.
+     */
     public void Register() throws IOException {
         User user = getValues();
         if (user.getUsername().isEmpty() || user.getName().isEmpty() || user.getPassword().isEmpty() || user.getEmail().isEmpty()) {
@@ -85,6 +91,12 @@ public class RegisterController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Checks if the provided email address is in a valid format.
+     *
+     * @param email The email address to validate.
+     * @return True if the email address is valid, false otherwise.
+     */
     private boolean isValidEmail(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
         return email.matches(emailRegex);

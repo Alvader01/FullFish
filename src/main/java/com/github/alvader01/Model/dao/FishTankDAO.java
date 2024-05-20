@@ -23,6 +23,13 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
 
 
 
+    /**
+     * Save a FishTank object to the database if it doesn't already exist.
+     *
+     * @param  fishTank     the FishTank object to be saved
+     * @param  currentUser  the current User performing the save operation
+     * @return              a new FishTank object representing the saved state
+     */
     public FishTank saveFishTank(FishTank fishTank, User currentUser) {
         FishTank result = new FishTank();
         FishTank f = findById(fishTank.getId());
@@ -54,6 +61,12 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
         return null;
     }
 
+    /**
+     * Updates a FishTank object in the database with the provided data.
+     *
+     * @param fishTank   The FishTank object containing the updated data.
+     * @return         The updated FishTank object.
+     */
     @Override
     public FishTank update(FishTank fishTank) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(UPDATE)) {
@@ -91,6 +104,13 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
     }
 
 
+    /**
+     * Deletes a FishTank object from the database.
+     *
+     * @param fishTank   The FishTank object to be deleted.
+     * @return         The deleted FishTank object.
+     * @throws SQLException if a database access error occurs
+     */
     @Override
     public FishTank delete(FishTank fishTank) throws SQLException {
         if ( fishTank!= null) {
@@ -103,6 +123,12 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
         return fishTank;
     }
 
+    /**
+     * Retrieves a FishTank object from the database by its ID.
+     *
+     * @param id   The ID of the FishTank object to retrieve.
+     * @return         The retrieved FishTank object, or null if not found.
+     */
     @Override
     public FishTank findById(Integer id) {
         FishTank result = null;
@@ -125,6 +151,11 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
     }
 
 
+    /**
+     * Retrieves all FishTank objects from the database.
+     *
+     * @return         A list of all FishTank objects found in the database.
+     */
     @Override
     public List<FishTank> findAll() {
         List<FishTank> result = new ArrayList<>();
@@ -150,6 +181,12 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
     }
 
 
+    /**
+     * Retrieves all FishTank objects associated with a specific user from the database.
+     *
+     * @param username   The username of the user whose FishTank objects are to be retrieved.
+     * @return         A list of FishTank objects associated with the specified user.
+     */
     public List<FishTank> findByUser(String username) {
         List<FishTank> fishTanks = new ArrayList<>();
 
@@ -181,6 +218,12 @@ public class FishTankDAO implements DAO<FishTank, Integer> {
         return new FishTankDAO();
     }
 
+    /**
+     * Checks if a FishTank object with the specified ID exists in the database.
+     *
+     * @param id   The ID of the FishTank object to check for existence.
+     * @return         True if a FishTank with the specified ID exists, false otherwise.
+     */
     public boolean exists(Integer id) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYID)) {
             ps.setString(1, id.toString());

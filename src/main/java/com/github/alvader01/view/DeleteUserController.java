@@ -72,6 +72,13 @@ public class DeleteUserController extends Controller implements Initializable {
     }
 
 
+    /**
+     * Deletes the selected user from the database.
+     * Displays success or error alerts based on the deletion status.
+     *
+     * @throws SQLException If a SQL exception occurs during the deletion process.
+     * @throws IOException  If an I/O exception occurs while deleting the user.
+     */
     public void deleteUser() throws SQLException, IOException {
         User userdao = getValuesTextField();
         UserDAO uDAO = new UserDAO();

@@ -16,6 +16,12 @@ public class UserDAO implements DAO<User, String> {
     private final static String FINDBYUSERNAME="SELECT u.username,u.name, u.password,u.email FROM user AS u WHERE u.username = ?";
     private final static String DELETE="DELETE FROM user WHERE username = ?";
 
+    /**
+     * Saves a User object in the database.
+     *
+     * @param user   The User object to be saved.
+     * @return         A newly created User object.
+     */
     @Override
     public User save(User user) {
         User result = new User();
@@ -40,6 +46,12 @@ public class UserDAO implements DAO<User, String> {
         return result;
     }
 
+    /**
+     * Updates a User object in the database with the provided data.
+     *
+     * @param user   The User object containing the updated data.
+     * @return         The updated User object.
+     */
     @Override
     public User update(User user) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(UPDATE)) {
@@ -97,6 +109,13 @@ public class UserDAO implements DAO<User, String> {
 
 
 
+    /**
+     * Deletes a User object from the database.
+     *
+     * @param user   The User object to be deleted.
+     * @return         The deleted User object.
+     * @throws SQLException if a database access error occurs
+     */
     @Override
     public User delete(User user) throws SQLException {
         if (user != null && user.getUsername() != null) {
@@ -109,6 +128,12 @@ public class UserDAO implements DAO<User, String> {
         return user;
     }
 
+    /**
+     * Retrieves a User object from the database by its username.
+     *
+     * @param key   The username of the User object to retrieve.
+     * @return         The retrieved User object, or null if not found.
+     */
     @Override
     public User findById(String key) {
         return null;
@@ -141,7 +166,12 @@ public class UserDAO implements DAO<User, String> {
 
 
 
-    @Override
+    /**
+     * Retrieves all User objects from the database.
+     *
+     * @return         A list of all User objects found in the database.
+     */
+        @Override
     public List<User> findAll() {
         List<User> result = new ArrayList<>();
 
@@ -162,6 +192,12 @@ public class UserDAO implements DAO<User, String> {
         return result;
     }
 
+    /**
+     * Checks if a User with the specified username exists in the database.
+     *
+     * @param username   The username of the User to check for existence.
+     * @return         True if a User with the specified username exists, false otherwise.
+     */
     public boolean exists(String username) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYUSERNAME)) {
             ps.setString(1, username);

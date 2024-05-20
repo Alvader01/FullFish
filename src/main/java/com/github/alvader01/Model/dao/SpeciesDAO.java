@@ -26,6 +26,13 @@ public class SpeciesDAO implements DAO<Species, Integer> {
         return null;
     }
 
+    /**
+     * Saves a Species object in the database.
+     *
+     * @param species   The Species object to be saved.
+     * @param currentUser   The User performing the operation.
+     * @return         A newly created Species object.
+     */
     public Species saveSpecies(Species species, User currentUser) {
         Species result = new Species();
         Species s = findById(species.getId());
@@ -48,7 +55,13 @@ public class SpeciesDAO implements DAO<Species, Integer> {
 
 
 
-        @Override
+    /**
+     * Updates a Species object in the database with the provided data.
+     *
+     * @param species   The Species object containing the updated data.
+     * @return         The updated Species object.
+     */
+    @Override
     public Species update(Species species) {
             try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(UPDATE)) {
                 ps.setString(1, species.getName());
@@ -65,7 +78,14 @@ public class SpeciesDAO implements DAO<Species, Integer> {
         }
 
 
-    @Override
+    /**
+     * Deletes a Species object from the database.
+     *
+     * @param species   The Species object to be deleted.
+     * @return         The deleted Species object.
+     * @throws SQLException if a database access error occurs
+     */
+        @Override
     public Species delete(Species species) throws SQLException {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(DELETE)) {
             ps.setInt(1, species.getId());
@@ -78,6 +98,12 @@ public class SpeciesDAO implements DAO<Species, Integer> {
         return species;
     }
 
+    /**
+     * Retrieves a Species object from the database by its ID.
+     *
+     * @param id   The ID of the Species object to retrieve.
+     * @return         The retrieved Species object, or null if not found.
+     */
     @Override
     public Species findById(Integer id) {
         Species species = null;
@@ -101,6 +127,11 @@ public class SpeciesDAO implements DAO<Species, Integer> {
         return species;
     }
 
+    /**
+     * Retrieves all Species objects from the database.
+     *
+     * @return         A list of all Species objects found in the database.
+     */
     @Override
     public List<Species> findAll() {
         List<Species> result = new ArrayList<>();
@@ -133,6 +164,12 @@ public class SpeciesDAO implements DAO<Species, Integer> {
 
 
 
+    /**
+     * Retrieves all Species objects associated with a specific FishTank from the database.
+     *
+     * @param fishTank   The FishTank object for which Species objects are to be retrieved.
+     * @return         A list of Species objects associated with the specified FishTank.
+     */
     public List<Species> findInFishTank(FishTank fishTank) {
         List<Species> speciesInTank = new ArrayList<>();
 
@@ -152,6 +189,12 @@ public class SpeciesDAO implements DAO<Species, Integer> {
 
         return speciesInTank;
     }
+    /**
+     * Retrieves a Species object from the database by its name.
+     *
+     * @param name   The name of the Species object to retrieve.
+     * @return         The retrieved Species object, or null if not found.
+     */
     public Species findSpeciesByName(String name) {
         Species result = null;
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYNAME)) {
@@ -173,6 +216,12 @@ public class SpeciesDAO implements DAO<Species, Integer> {
     }
 
 
+    /**
+     * Checks if a Species object with the specified ID exists in the database.
+     *
+     * @param id   The ID of the Species object to check for existence.
+     * @return         True if a Species with the specified ID exists, false otherwise.
+     */
     public boolean exists(Integer id) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDBYID)) {
             ps.setString(1, id.toString());
