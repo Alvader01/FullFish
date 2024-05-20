@@ -16,6 +16,12 @@ public class SpeciesInTankDAO implements DAO<SpeciesInTank, Integer> {
     private final static String DELETESPECIESFROMTANK = "DELETE FROM Holds WHERE fishtankId = ? AND speciesId = ?";
     private final static String FINDALLSPECIESINTANK = "SELECT s.id, s.name, s.dimension, s.longevity FROM Species AS s JOIN Holds AS h ON s.id = h.speciesId WHERE h.fishtankId = ?";
 
+    /**
+     * Adds a Species to a FishTank in the database.
+     *
+     * @param fishTankId   The ID of the FishTank to which the Species will be added.
+     * @param speciesId    The ID of the Species to be added to the FishTank.
+     */
     public void addSpeciesToTank(int fishTankId, int speciesId) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(ADDSPECIESINTANK)) {
             ps.setInt(1, fishTankId);
@@ -25,6 +31,13 @@ public class SpeciesInTankDAO implements DAO<SpeciesInTank, Integer> {
             throw new RuntimeException("Error al agregar la especie al acuario", e);}
     }
 
+    /**
+     * Removes a Species from a FishTank in the database.
+     *
+     * @param fishTankId   The ID of the FishTank from which the Species will be removed.
+     * @param speciesId    The ID of the Species to be removed from the FishTank.
+     * @return         True if the Species was successfully removed from the FishTank, false otherwise.
+     */
     public boolean removeSpeciesFromTank(int fishTankId, int speciesId) {
         try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(DELETESPECIESFROMTANK)) {
             ps.setInt(1, fishTankId);
@@ -36,6 +49,12 @@ public class SpeciesInTankDAO implements DAO<SpeciesInTank, Integer> {
         }
     }
 
+    /**
+     * Retrieves all Species associated with a FishTank from the database.
+     *
+     * @param fishTankId   The ID of the FishTank for which Species are to be retrieved.
+     * @return         A list of Species associated with the specified FishTank.
+     */
     public List<Species> findAllSpeciesInTank(int fishTankId) {
         List<Species> speciesList = new ArrayList<>();
 

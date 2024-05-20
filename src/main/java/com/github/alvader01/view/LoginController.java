@@ -56,6 +56,12 @@ public class LoginController extends Controller implements Initializable {
         }
     }
 
+    /**
+     * Logs in the user based on the provided credentials.
+     * Displays error alerts if the login attempt fails due to incorrect credentials or other issues.
+     *
+     * @throws IOException If an I/O exception occurs while logging in.
+     */
     public void Login() throws IOException {
         User user = getValues();
         UserDAO uDAO = new UserDAO();

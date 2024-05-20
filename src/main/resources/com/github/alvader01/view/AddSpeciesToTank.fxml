@@ -23,17 +23,17 @@
             <Font name="Cambria Math" size="30.0" />
          </font>
       </Text>
-      <Text fill="#4851ff" layoutX="505.0" layoutY="339.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elige el acuario" textAlignment="CENTER" wrappingWidth="294.867431640625">
+      <Text fill="#4851ff" layoutX="235.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elige el acuario" textAlignment="CENTER" wrappingWidth="294.867431640625">
          <font>
             <Font name="Cambria Math" size="30.0" />
          </font>
       </Text>
       <Line endX="308.849609375" endY="-6.999992370605469" layoutX="359.0" layoutY="81.0" startX="-247.0" startY="-6.999992370605469" />
       <Line endX="119.23825073242188" layoutX="90.0" layoutY="349.0" startX="-74.99999237060547" />
-      <Line endX="120.5999755859375" endY="-3.0517578125E-5" layoutX="628.0" layoutY="349.0" startX="-73.00003051757812" startY="-3.0517578125E-5" />
+      <Line endX="120.5999755859375" endY="-3.0517578125E-5" layoutX="353.0" layoutY="347.0" startX="-73.00003051757812" startY="-3.0517578125E-5" />
       <ComboBox fx:id="SpeciessComboBox" layoutX="37.0" layoutY="359.0" prefWidth="150.0" promptText="Especies" />
-      <ComboBox fx:id="FishTanksComboBox" layoutX="577.0" layoutY="359.0" prefWidth="150.0" promptText="Acuarios" />
-      <Button fx:id="anadir" layoutX="37.0" layoutY="428.0" mnemonicParsing="false" onAction="#addSpeciesToTank" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Añadir la especie">
+      <ComboBox fx:id="FishTanksComboBox" layoutX="302.0" layoutY="359.0" prefWidth="150.0" promptText="Acuarios" />
+      <Button fx:id="anadir" layoutX="37.0" layoutY="417.0" mnemonicParsing="false" onAction="#addSpeciesToTank" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Añadir la especie">
          <font>
             <Font name="Cambria Math" size="16.0" />
          </font>
@@ -48,18 +48,18 @@
             <Image url="@MdiInformationVariantCircle.png" />
          </image>
       </ImageView>
-      <Button fx:id="eliminar" layoutX="302.0" layoutY="428.0" mnemonicParsing="false" onAction="#deleteSpeciesFromTank" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Eliminar especies">
+      <Button fx:id="eliminar" layoutX="570.0" layoutY="417.0" mnemonicParsing="false" onAction="#deleteSpeciesFromTank" prefHeight="44.0" prefWidth="151.0" style="-fx-background-radius: 20;" text="Eliminar especies">
          <font>
             <Font name="Cambria Math" size="16.0" />
          </font>
       </Button>
-      <ComboBox fx:id="DeleteSpeciesComboBox" layoutX="303.0" layoutY="359.0" prefWidth="150.0" promptText="Especies" />
-      <Text fill="#4851ff" layoutX="277.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elige la especie para eliminar" textAlignment="CENTER" wrappingWidth="208.462646484375">
+      <ComboBox fx:id="DeleteSpeciesComboBox" layoutX="570.0" layoutY="359.0" prefWidth="150.0" promptText="Especies" />
+      <Text fill="#4851ff" layoutX="541.0" layoutY="295.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Elige la especie para eliminar" textAlignment="CENTER" wrappingWidth="208.462646484375">
          <font>
             <Font name="Cambria Math" size="30.0" />
          </font>
       </Text>
-      <Line endX="119.23825073242188" layoutX="355.0" layoutY="347.0" startX="-74.99999237060547" />
+      <Line endX="119.23825073242188" layoutX="623.0" layoutY="348.0" startX="-74.99999237060547" />
       <TableView fx:id="SpeciesTableView" layoutX="43.0" layoutY="89.0" prefHeight="161.0" prefWidth="668.0">
         <columns>
           <TableColumn fx:id="SpeciesNameColumn" prefWidth="328.7999954223633" text="Nombre" />

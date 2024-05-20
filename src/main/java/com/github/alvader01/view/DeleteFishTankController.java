@@ -52,7 +52,6 @@ public class DeleteFishTankController extends Controller implements Initializabl
     public void onOpen(Object input) throws IOException {
         FishTankDAO fDAO = new FishTankDAO();
         List<FishTank> fishTanks = fDAO.findAll();
-        System.out.println(fishTanks);
         this.fishTanks = FXCollections.observableArrayList(fishTanks);
         table.setItems(this.fishTanks);
     }
@@ -84,6 +83,13 @@ public class DeleteFishTankController extends Controller implements Initializabl
     }
 
 
+    /**
+     * Deletes the selected fish tank from the database.
+     * Displays success or error alerts based on the deletion status.
+     *
+     * @throws SQLException If a SQL exception occurs during the deletion process.
+     * @throws IOException  If an I/O exception occurs while deleting the fish tank.
+     */
     public void deleteFishTank() throws SQLException, IOException {
         FishTank fishTankdao = getValuesTextField();
         FishTankDAO fDAO = new FishTankDAO();

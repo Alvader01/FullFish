@@ -86,6 +86,11 @@ public class AddSpeciesInTankController extends Controller implements Initializa
         SpeciesLongevityColumn.setCellValueFactory(new PropertyValueFactory<>("longevity"));
     }
 
+    /**
+     * Loads the species associated with the given tank ID into the corresponding GUI components.
+     *
+     * @param tankId The ID of the tank whose associated species are to be loaded.
+     */
     private void loadSpeciesInTank(int tankId) {
         SpeciesInTankDAO speciesInTankDAO = new SpeciesInTankDAO();
         List<Species> speciesInTank = speciesInTankDAO.findAllSpeciesInTank(tankId);
@@ -100,6 +105,9 @@ public class AddSpeciesInTankController extends Controller implements Initializa
     }
 
 
+    /**
+     * Adds the selected species to the selected fish tank.
+     */
     public void addSpeciesToTank() {
         String selectedTankName = FishTanksComboBox.getValue();
         String speciesName = SpeciessComboBox.getValue();
@@ -118,6 +126,9 @@ public class AddSpeciesInTankController extends Controller implements Initializa
         }
     }
 
+    /**
+     * Deletes the selected species from the selected fish tank.
+     */
     public void deleteSpeciesFromTank() {
         String selectedTankName = FishTanksComboBox.getValue();
         String speciesName = DeleteSpeciesComboBox.getValue();

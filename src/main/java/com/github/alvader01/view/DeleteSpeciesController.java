@@ -74,6 +74,13 @@ public class DeleteSpeciesController extends Controller implements Initializable
     }
 
 
+    /**
+     * Deletes the selected species from the database.
+     * Displays success or error alerts based on the deletion status.
+     *
+     * @throws SQLException If a SQL exception occurs during the deletion process.
+     * @throws IOException  If an I/O exception occurs while deleting the species.
+     */
     public void deleteSpecies() throws SQLException, IOException {
         Species speciesDAO = getValuesTextField();
         SpeciesDAO sDAO = new SpeciesDAO();

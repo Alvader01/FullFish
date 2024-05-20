@@ -86,6 +86,7 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(username, user.username);
+
     }
 
     @Override

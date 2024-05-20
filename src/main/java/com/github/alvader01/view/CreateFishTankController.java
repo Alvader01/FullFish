@@ -64,6 +64,12 @@ public class CreateFishTankController extends Controller implements Initializabl
         return fishTank;
     }
 
+    /**
+     * Creates a new fish tank with the provided values.
+     * Displays error alerts if the provided values are invalid or if a tank with the same ID already exists.
+     *
+     * @throws IOException If an I/O exception occurs while creating the fish tank.
+     */
     public void createFishTank() throws IOException {
         FishTank fishTank = getFishTankValues();
 
