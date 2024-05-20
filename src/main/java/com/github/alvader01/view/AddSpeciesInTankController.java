@@ -120,11 +120,18 @@ public class AddSpeciesInTankController extends Controller implements Initializa
             Species species = speciesDAO.findSpeciesByName(speciesName);
 
             if (fishTank != null && species != null) {
-                SpeciesInTankDAO.build().addSpeciesToTank(fishTankId, species.getId());
+                SpeciesInTankDAO speciesInTankDAO = SpeciesInTankDAO.build();
+                if (speciesInTankDAO.isSpeciesInTank(fishTankId, species.getId())) {;
+                    AppController.ShowAlertsSpeciesAlreadyExistsInTank();
+                } else {
+                    speciesInTankDAO.addSpeciesToTank(fishTankId, species.getId());
+                    AppController.ShowAlertsSuccessfullyAddSpeciesToTank();
+                }
                 loadSpeciesInTank(fishTankId);
             }
         }
     }
+
 
     /**
      * Deletes the selected species from the selected fish tank.

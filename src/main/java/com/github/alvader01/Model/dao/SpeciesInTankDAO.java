@@ -14,6 +14,8 @@ import java.util.List;
 public class SpeciesInTankDAO implements DAO<SpeciesInTank, Integer> {
     private final static String ADDSPECIESINTANK = "INSERT INTO Holds (fishtankId, speciesId) VALUES (?, ?)";
     private final static String DELETESPECIESFROMTANK = "DELETE FROM Holds WHERE fishtankId = ? AND speciesId = ?";
+    private final static String FINDINFISHTANK = "SELECT COUNT(*) FROM Holds WHERE fishTankId = ? AND speciesId = ?\n";
+    private final static String FINDSPECIESBYID = "SELECT id, name, dimension, longevity FROM Species WHERE id = ?";
     private final static String FINDALLSPECIESINTANK = "SELECT s.id, s.name, s.dimension, s.longevity FROM Species AS s JOIN Holds AS h ON s.id = h.speciesId WHERE h.fishtankId = ?";
 
     /**
@@ -49,12 +51,6 @@ public class SpeciesInTankDAO implements DAO<SpeciesInTank, Integer> {
         }
     }
 
-    /**
-     * Retrieves all Species associated with a FishTank from the database.
-     *
-     * @param fishTankId   The ID of the FishTank for which Species are to be retrieved.
-     * @return         A list of Species associated with the specified FishTank.
-     */
     public List<Species> findAllSpeciesInTank(int fishTankId) {
         List<Species> speciesList = new ArrayList<>();
 
@@ -111,5 +107,59 @@ public class SpeciesInTankDAO implements DAO<SpeciesInTank, Integer> {
 
     public static SpeciesInTankDAO build() {
         return new SpeciesInTankDAO();
+    }
+    /**
+     * A description of the entire Java function.
+     *
+     * @param  speciesId     description of parameter
+     * @return               description of return value
+     */
+    public Species findSpeciesById(int speciesId) {
+        Species species = null;
+        try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDSPECIESBYID)) {
+            ps.setInt(1, speciesId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                int dimension = rs.getInt("dimension");
+                int longevity = rs.getInt("longevity");
+
+                species = new Species(id, name, dimension, longevity);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al encontrar la especie por ID", e);
+        }
+
+        return species;
+    }
+
+    /**
+     * A method to check if a species is present in a fish tank.
+     *
+     * @param  fishTankId    the ID of the fish tank to check
+     * @param  speciesId     the ID of the species to search for
+     * @return              true if the species is in the tank, false otherwise
+     */
+    public boolean isSpeciesInTank(int fishTankId, int speciesId) {
+        Species species = findSpeciesById(speciesId);
+
+        if (species != null) {
+            try (PreparedStatement ps = ConnectionMariaDB.getConnection().prepareStatement(FINDINFISHTANK)) {
+                ps.setInt(1, fishTankId);
+                ps.setInt(2, speciesId);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Error al verificar la asociación de la especie con el acuario", e);
+            }
+        }
+
+        return false;
     }
 }

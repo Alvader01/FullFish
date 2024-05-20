@@ -162,6 +162,17 @@ public class AppController extends Controller implements Initializable {
         alert.setContentText("La especie ya existe");
         alert.showAndWait();
     }
+    public static void ShowAlertsSpeciesAlreadyExistsInTank(){
+        alert.setTitle("Error");
+        alert.setContentText("La especie ya esta en el acuario");
+        alert.showAndWait();
+    }
+    public static void ShowAlertsSuccessfullyAddSpeciesToTank(){
+        alert2.setTitle("Exito");
+        alert2.setContentText("Especie añadida con exito");
+        alert2.showAndWait();
+    }
+
     public static void ShowAlertsSuccessfullyCreateTank(){
         alert2.setTitle("Exito");
         alert2.setContentText("Acuario registrado con exito");
